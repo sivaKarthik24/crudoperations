@@ -1,0 +1,111 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 mt-4">
+      <h1 *ngIf="flag" class="text-center">Admin DashBoard</h1>
+      <table *ngIf="flag" class="table table-bordered table-striped table-hover">
+        <thead>
+          <tr>
+            <th class="text-center">ID</th>
+            <th class="text-center">Email</th>
+            <th class="text-center">Password</th>
+            <th class="text-center">Date of Birth</th>
+            <th class="text-center">Mobile Number</th>
+            <th class="text-center">&nbsp;</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td>{{ user.id }}</td>
+            <td>{{ user.firstName }}</td>
+            <td>{{ user.lastName }}</td>
+            <td>{{ user.fourthName }}</td>
+            <td>{{ user.fifthName }}</td>
+            <td>
+              <button type="button" class="btn btn-info btn-sm mr-2" (click)="showEditUserForm(user)">Edit</button>
+
+              <button type="button" class="btn btn-danger btn-sm" (click)="removeUser(user)">Delete</button>
+            </td>
+          </tr>
+          
+        </tbody>
+        
+        <button type="button" class="btn btn-danger btn-sm" (click)="loggingout()">LogOut</button> 
+      </table>
+      
+      <h2 *ngIf="userPage"> Welcome {{currentUser}}</h2>
+      <button *ngIf="userPage" type="button" class="btn btn-danger btn-sm" (click)="userloggingout()">LogOut</button> 
+      <!-- <h3 *ngIf="signupFlag">Signed in succuessfully</h3> -->
+      <button *ngIf="logFlag" class="btn btn-success" (click)="showAddUserForm()">Sign Up</button>
+      &nbsp;
+      <button *ngIf="loginflag" class="btn btn-success" (click)="showloginForm()">Log IN</button>
+      
+      <div class="mt-4">
+        <form *ngIf="userForm">
+          <h2>Enter Email and Password</h2>
+          <p>Email: <input type="email" name="firstName" [(ngModel)]="newUser.firstName" /></p>
+          <p>Password: <input type="password" name="lastName" [(ngModel)]="newUser.lastName" /></p>
+          <p>Confirm Password: <input type="password" name="thirdName" [(ngModel)]="newUser.thirdName" /></p>
+          <input type="hidden" name="fourthName" [(ngModel)]="newUser.fourthName" />
+          <input type="hidden" name="fifthName" [(ngModel)]="newUser.fifthName" />
+          <p>
+            <button type="button" class="btn btn-primary mr-2" (click)="saveUser(newUser)">Sign In</button>
+            <button type="button" class="btn btn-warning" (click)="cancelNewUser()">Cancel</button>
+          </p>
+        </form>
+        <form *ngIf="loginForm">
+          <h2>Enter Email and Password</h2>
+          <p>Email: <input type="email" name="firstName" [(ngModel)]="newUser.firstName" /></p>
+          <p>Password: <input type="password" name="lastName" [(ngModel)]="newUser.lastName" /></p>
+          <input type="hidden" name="fourthName" [(ngModel)]="newUser.fourthName" />
+          <input type="hidden" name="fifthName" [(ngModel)]="newUser.fifthName" />
+          <p>
+            <button type="button" class="btn btn-primary mr-2" (click)="validate(newUser)">Log IN</button>
+            <button type="button" class="btn btn-warning" (click)="cancelNewUser()">Cancel</button>
+          </p>
+        </form>
+
+        <form *ngIf="editUserForm">
+          <h2>Edit User Details</h2>
+          <p>Email: <input type="email" name="firstName" [(ngModel)]="editedUser.firstName" /></p>
+          <p>Password: <input type="text" name="lastName" [(ngModel)]="editedUser.lastName" /></p>
+          <p>Date of Birth: <input type="date" name="fourthName" [(ngModel)]="editedUser.fourthName" /></p>
+          <p>Mobile Number: <input type="number" name="fifthName" [(ngModel)]="editedUser.fifthName" /></p>
+          <p>
+            <button type="button" class="btn btn-primary mr-2" (click)="updateUser()">Submit</button>
+            <button type="button" class="btn btn-warning" (click)="cancelEdits()">Cancel</button>
+          </p>
+        </form>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<div *ngIf="userpresentFlag">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 mt-4">
+          
+        <h3>Welcome,{{curruser.firstName}}</h3>
+        progress bar:
+        <progress value="{{probar}}" max="100">
+        </progress>{{probar}}%
+        &nbsp;&nbsp;
+        <button type="button" class="btn btn-primary mr-2" (click)="editbutton()">Edit Profile</button>
+        <form *ngIf="addFlag">
+          <h3>Edit Changes</h3>
+          <p>Date of birth :<input type="date" name="fourthName" [(ngModel)]="curruser.fourthName" /></p>
+          <p>Mobile Number :<input type="number" name="fifthName" [(ngModel)]="curruser.fifthName" /></p>
+          
+          <p>
+            <button type="button" class="btn btn-primary mr-2" (click)=" additionalsave()">Save</button>
+            
+          </p>
+        </form>
+        <p>Date of birth :{{curruser.fourthName}}</p>
+          <p>Mobile Number :{{curruser.fifthName}}</p>
+          <button type="button" class="btn btn-danger btn-sm" (click)="loggingout()">LogOut</button> 
+        </div>
+    </div>
+  </div>
+</div>
