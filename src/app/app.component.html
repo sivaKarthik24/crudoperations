@@ -1,3 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
 <div class="container">
   <div class="row">
     <div class="col-md-12 mt-4">
@@ -14,8 +25,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let user of users">
-            <td>{{ user.id }}</td>
+          <tr *ngFor="let user of users;let ind=index">
+            <td>{{ ind+1 }}</td>
             <td>{{ user.firstName }}</td>
             <td>{{ user.lastName }}</td>
             <td>{{ user.fourthName }}</td>
@@ -47,6 +58,7 @@
           <p>Confirm Password: <input type="password" name="thirdName" [(ngModel)]="newUser.thirdName" /></p>
           <input type="hidden" name="fourthName" [(ngModel)]="newUser.fourthName" />
           <input type="hidden" name="fifthName" [(ngModel)]="newUser.fifthName" />
+          
           <p>
             <button type="button" class="btn btn-primary mr-2" (click)="saveUser(newUser)">Sign In</button>
             <button type="button" class="btn btn-warning" (click)="cancelNewUser()">Cancel</button>
@@ -85,15 +97,29 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12 mt-4">
-          
         <h3>Welcome,{{curruser.firstName}}</h3>
-        progress bar:
-        <progress value="{{probar}}" max="100">
-        </progress>{{probar}}%
-        &nbsp;&nbsp;
+        <button type="button" class="layer" (click)="profile()">Profile</button>
+        <button type="button" class="layer" (click)="income()">Income</button>
+        <button type="button" class="layer"(click)="expense()">Expense</button>
+        <button type="button" class="layer" (click)="summary()">Summary</button>
+        
+        <div>
+          Progress bar:
+        </div>
+        
+        <div class="progress">
+          <div class="progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" [style.width]="probar+'%'">
+            {{probar}}%
+          </div>
+        </div>
+        
         <button type="button" class="btn btn-primary mr-2" (click)="editbutton()">Edit Profile</button>
         <form *ngIf="addFlag">
           <h3>Edit Changes</h3>
+          <input type='file' id="bannerImg" (change)="sample()">
+          <img [src]="curruser.sixthName" id="imgPreview" alt="Preview" width="100px" height="100px">
+          
+          
           <p>Date of birth :<input type="date" name="fourthName" [(ngModel)]="curruser.fourthName" /></p>
           <p>Mobile Number :<input type="number" name="fifthName" [(ngModel)]="curruser.fifthName" /></p>
           
@@ -102,10 +128,111 @@
             
           </p>
         </form>
+        <p>Profile pic:&nbsp;</p>
+        <img [src]="curruser.sixthName" id="imgPreview" alt="Preview" width="100px" height="100px">
         <p>Date of birth :{{curruser.fourthName}}</p>
           <p>Mobile Number :{{curruser.fifthName}}</p>
           <button type="button" class="btn btn-danger btn-sm" (click)="loggingout()">LogOut</button> 
         </div>
+        
     </div>
   </div>
 </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 mt-4">
+          <div *ngIf="incomeFlag">
+            <h3>Welcome,{{curruser.firstName}}</h3>
+            <button type="button" class="layer" (click)="profile()">Profile</button>
+            <button type="button" class="layer" (click)="income()">Income</button>
+            <button type="button" class="layer"(click)="expense()">Expense</button>
+            <button type="button" class="layer" (click)="summary()">Summary</button>
+            <div>
+              <form>
+                <p>
+                  Choose Income Options:<select name="city" class="" (change)="onChangeIncome($event.target.value)">
+                    <option *ngFor="let tab of incomeTab"  [value]="tab">
+                    {{tab}}
+                    </option>
+                </select>
+                </p>
+                
+                <p>Enter {{selectedIncome}} Amount    :<input type="number" name="h" [(ngModel)]="myuser[selectedIncome]" /></p>
+                
+                <p>Description    :<input type="text" name="descr" [(ngModel)]="myuser.eightName" /></p>
+                <p>Date of Transaction: <input type="date" name="dot" [(ngModel)]="myuser.income_dot" /></p>
+              </form>
+            </div>
+            
+            <h2>Income Details:</h2>
+            <div>
+                <h4>Salary:{{myuser.Salary}}</h4>
+                <h4>Bonus:{{myuser.Bonus}}</h4>
+                <h4>Cash:{{myuser.Cash}}</h4>
+                <h4>Check:{{myuser.Check}}</h4>
+                <h4>Others:{{myuser.Others}}</h4>
+
+            </div>
+            
+            <button type="button" class="btn btn-primary mr-2" (click)="incomesubmit()">Submit</button>
+              <button type="button" class="btn btn-danger btn-sm" (click)="loggingout()">LogOut</button>
+          </div>
+          <div *ngIf="expenseFlag">
+            <h3>Welcome,{{curruser.firstName}}</h3>
+            <button type="button" class="layer" (click)="profile()">Profile</button>
+            <button type="button" class="layer" (click)="income()">Income</button>
+            <button type="button" class="layer"(click)="expense()">Expense</button>
+            <button type="button" class="layer" (click)="summary()">Summary</button>
+            <div>
+            <form>
+              <p>
+              Choose Expense Options:<select name="city" class="" (change)="onChangeExpense($event.target.value)">
+                  <option *ngFor="let tab of expenseTab"  [value]="tab">
+                      {{tab}}
+                    </option>
+                </select>
+              </p>
+              
+            
+              <p>Enter {{selectedExpense}} Amount    :<input type="number" name="h" [(ngModel)]="my2user[selectedExpense]" /></p>
+              <p>Description    :<input type="text" name="descr" [(ngModel)]="my2user.seventhName" /></p>
+              <p>Date of Transaction: <input type="date" name="dot" [(ngModel)]="my2user.expence_dot" /></p>
+          </form>
+            </div>
+            <h2>Expense Details:</h2>
+            <div>
+                <h4>Food:{{my2user.Food}}</h4>
+                <h4>Grocery:{{my2user.Grocery}}</h4>
+                <h4>Bills:{{my2user.Bills}}</h4>
+                <h4>Recharge:{{my2user.Recharges}}</h4>
+                <h4>Education:{{my2user.Education}}</h4>
+                <h4>Travel:{{my2user.Travel}}</h4>
+
+            </div>
+            <button type="button" class="btn btn-primary mr-2" (click)="expensesubmit()">Submit</button>
+              <button type="button" class="btn btn-danger btn-sm" (click)="loggingout()">LogOut</button>
+          </div>
+          <div *ngIf="summaryFlag">
+            <h3>Welcome,{{curruser.firstName}}</h3>
+            <button type="button" class="layer" (click)="profile()">Profile</button>
+            <button type="button" class="layer" (click)="income()">Income</button>
+            <button type="button" class="layer"(click)="expense()">Expense</button>
+            <button type="button" class="layer" (click)="summary()">Summary</button>
+            <div>
+                Income Vs Expense
+            </div>
+            <div> 
+              Total Income :{{curruser.totalIncome}}
+            </div>
+            <div> 
+              Total Expense :{{curruser.totalExpense}}
+            </div>
+            
+              <button type="button" class="btn btn-danger btn-sm" (click)="loggingout()">LogOut</button>
+          </div>
+    </div>
+  </div>
+</div>
+
+    

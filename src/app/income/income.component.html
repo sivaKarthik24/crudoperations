@@ -1,0 +1,13 @@
+
+
+<button type="button" class="layer" (click)="income()">Income</button>
+<button type="button" class="layer"(click)="expense()">Expense</button>
+<button type="button" class="layer" (click)="summary()">Summary</button>
+<div>
+    <select name="city" class="rounded-inputs20 select-select col-md-3" (change)="onChange($event.target.value)">
+        <option *ngFor="let tab of incomeTab"  [value]="tab">
+        {{tab}}
+        </option>
+    </select>
+</div>
+
