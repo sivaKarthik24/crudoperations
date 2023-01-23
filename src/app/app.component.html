@@ -157,7 +157,7 @@
                     </option>
                 </select>
                 </p>
-                
+                <p *ngIf="icustomFlag">Enter Other Income:<input *ngIf="icustomFlag" type="text" name="customcategory" [(ngModel)]="myuser.icustom" /></p>
                 <p>Enter {{selectedIncome}} Amount in {{icurrency}}   :<input type="number" name="h" [(ngModel)]="myuser[selectedIncome]" />&nbsp;
                 <button type="button" name="usd" (click)="incomeusdConverter()">conversion</button></p>
                 <p>Description    :<input type="text" name="descr" [(ngModel)]="myuser.eightName" /></p>
@@ -193,7 +193,7 @@
                     </option>
                 </select>
               </p>
-              
+              <p *ngIf="ecustomFlag">Enter Other Expense:<input *ngIf="ecustomFlag" type="text" name="customcategory" [(ngModel)]="my2user.ecustom" /></p>
             
               <p>Enter {{selectedExpense}} Amount  in {{currency}} :<input type="number" name="h" [(ngModel)]="my2user[selectedExpense]" />&nbsp;
               <button type="button" name="usd" (click)="usdConverter()">conversion</button></p>
@@ -209,6 +209,7 @@
                 <h4>Recharge:{{my2user.Recharges}}</h4>
                 <h4>Education:{{my2user.Education}}</h4>
                 <h4>Travel:{{my2user.Travel}}</h4>
+                <h4>Others:{{my2user.Others}}</h4>
 
             </div>
             <button type="button" class="btn btn-primary mr-2" (click)="expensesubmit()">Submit</button>

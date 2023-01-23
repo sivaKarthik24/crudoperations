@@ -25,4 +25,6 @@ export interface User {
     travel:number;
     totalIncome:number;
     totalExpense:number;
+    ecustom:string;
+    icustom:string;
 }

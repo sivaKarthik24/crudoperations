@@ -33,7 +33,7 @@ export class AppComponent implements OnInit {
   curruser: User;
   url=''
   incomeTab=['Salary',"Bonus","Cash","Check","Others"]
-  expenseTab=["Food","Grocery","Bills","Recharges","Education","Travel"]
+  expenseTab=["Food","Grocery","Bills","Recharges","Education","Travel","Others"]
   selected = new FormControl(0);
   incomeFlag=false;
   static curruser: string;
@@ -47,6 +47,8 @@ export class AppComponent implements OnInit {
   duplica: number;
   currency: string;
   icurrency: string;
+  icustomFlag: boolean;
+  ecustomFlag: boolean;
   constructor(private userService: UserService) { }
 
   ngOnInit() {
@@ -406,6 +408,7 @@ sample(){
   // }
 }
 income(){
+  this.icustomFlag=false;
 this.incomeFlag=true;
   this.userpresentFlag=false;
   this.expenseFlag=false;
@@ -437,6 +440,7 @@ incomeusdConverter(){
   }
 }
 expense(){
+  this.ecustomFlag=false;
   this.userpresentFlag=false;
   this.incomeFlag=false;
   this.expenseFlag=true;
@@ -460,10 +464,18 @@ profile(){
 onChangeIncome(deviceValue) {
   
   this.selectedIncome=(deviceValue) 
+  if(this.selectedIncome==='Others')
+  this.icustomFlag=true;
+  else 
+  this.icustomFlag=false;
 }
 onChangeExpense(deviceValue) {
   
   this.selectedExpense=(deviceValue) 
+  if(this.selectedExpense==='Others')
+  this.ecustomFlag=true;
+  else 
+  this.ecustomFlag=false;
 }
 incomesubmit(){
   let cou=this.curruser.IncomeCount
@@ -483,12 +495,16 @@ incomesubmit(){
   if(this.curruser['Others']){
     this.curruser.others=this.curruser['Others']
   }
-  
+  if(this.myuser.icustom!=undefined){
+    this.incomeTab.pop()
+    this.incomeTab.push(this.myuser.icustom,'Others')
+    
+  }
   this.curruser.IncomeCount++;
   let cnt=0;
   for(let key in this.myuser) {
     
-      if (!key.startsWith('eig') && !key.startsWith('inco')) 
+      if (!key.startsWith('eig') && !key.startsWith('inco') && !(key.startsWith('icust')) )
       cnt+=this.myuser[key]
       else{
         continue;
@@ -520,6 +536,11 @@ expensesubmit(){
   if(this.curruser["Eduaction"]){
     this.curruser.education=this.curruser['Education']
   }
+  if(this.my2user.ecustom!=undefined){
+    this.expenseTab.pop()
+    this.expenseTab.push(this.my2user.ecustom,'Others')
+    
+  }
   if(this.curruser["Travel"]){
     this.curruser.travel=this.curruser['Travel']
   }
@@ -527,7 +548,7 @@ expensesubmit(){
   let cnt=0;
   for(let key in this.my2user) {
     
-    if (!key.startsWith('sev') && !key.startsWith('expen')) 
+    if (!key.startsWith('sev') && !key.startsWith('expen') && !(key.startsWith('ecust'))) 
     cnt+=this.my2user[key]
     else{
       continue;
