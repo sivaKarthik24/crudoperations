@@ -106,69 +106,76 @@ export class AppComponent implements OnInit {
   }
 
   saveUser(user: User) {
-    
+    var strongpassword=/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/
     var validate = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    var password=/(?=^.{6,}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).*/;
+    var password="^(?=.*[A-Z])(?=.*[0-9])(?=.{8,})"
+    var mediumpassword="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})"
     if(user.firstName.match(validate)){
-      if(!user.lastName.match(password)){
-        alert('password is weak')
+      if(user.lastName.match(strongpassword)){
+        let allUsers=this.getUsers()
+        this.userExits=false;
+        this.signupFlag=false;
+        let realName='';
+        let realPassword='';
+        
+        if(user.firstName!='admin@gmail.com'  && user.lastName===user.thirdName){
+        for(let i=0;i<allUsers.length;i++){
+          if(user.firstName===allUsers[i].firstName)
+          {
+            this.userExits=true;
+            realName=allUsers[i].firstName;
+            realPassword=allUsers[i].lastName;
+          }
+        }
+      }
+      else if(user.firstName!='admin@gmail.com'){
+        alert('password mismatch')
         return;
       }
-      
-      let allUsers=this.getUsers()
-    this.userExits=false;
-    this.signupFlag=false;
-    let realName='';
-    let realPassword='';
-    
-    if(user.firstName!='admin@gmail.com'  && user.lastName===user.thirdName){
-    for(let i=0;i<allUsers.length;i++){
-      if(user.firstName===allUsers[i].firstName)
-      {
-        this.userExits=true;
-        realName=allUsers[i].firstName;
-        realPassword=allUsers[i].lastName;
+      else if(user.firstName==='admin@gmail.com')  {
+        alert('Email already exists')
+        return;
       }
-    }
-  }
-  else if(user.firstName!='admin@gmail.com'){
-    alert('password mismatch')
-    return;
-  }
-  else if(user.firstName==='admin@gmail.com')  {
-    alert('Email already exists')
-    return;
-  }
-    if(this.userExits===true){
-      
-    alert('Email already exists')
-    return;
-    }
-    else{
-      
-      if(user.firstName==='admin@gmail.com')
-      {
-        if(user.lastName==='admin'){
-        this.flag=true;
-        this.userForm=false;
-        this.logFlag=false;
+        if(this.userExits===true){
+          
+        alert('Email already exists')
+        return;
         }
-      }
-      else{
-        if (this.isNewUser) {
-          // add a new user
-          this.userService.addUser(user);
-          user.totalExpense=user.totalIncome=user.expenseCount=user.IncomeCount=0
-          alert('signed in sucessfully');
+        else{
+          
+          if(user.firstName==='admin@gmail.com')
+          {
+            if(user.lastName==='admin'){
+            this.flag=true;
+            this.userForm=false;
+            this.logFlag=false;
+            }
+          }
+          else{
+            if (this.isNewUser) {
+              // add a new user
+              this.userService.addUser(user);
+              user.totalExpense=user.totalIncome=user.expenseCount=user.IncomeCount=0
+              alert('signed in sucessfully');
+            }
+            
+            this.userForm = false;
+            this.loginflag=true;
+            
+          }
+          
+          }
+        } 
+        else if(user.lastName.match(mediumpassword)){
+          alert('password is medium')
+        }
+        else if(user.lastName.match(password))
+          alert('password is week')
+        else{
+          alert('password is week')
         }
         
-        this.userForm = false;
-        this.loginflag=true;
-        
       }
-      
-      }
-    }
     else{
       alert('enter valid email address')
     }
