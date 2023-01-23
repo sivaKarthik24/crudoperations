@@ -45,11 +45,14 @@ export class AppComponent implements OnInit {
   selectedExpense='Food'
   my2user:any;
   duplica: number;
+  currency: string;
+  icurrency: string;
   constructor(private userService: UserService) { }
 
   ngOnInit() {
     this.users = this.getUsers();
-    
+    this.currency='INR'
+    this.icurrency='INR'
     this.logFlag=true;
     this.loginflag=true;
     var values = [],
@@ -404,7 +407,28 @@ this.incomeFlag=true;
   this.myuser={}
   
 }
-
+usdConverter(){
+  if(this.currency=='INR'){
+    this.currency='USD'
+    this.my2user[this.selectedExpense]=this.my2user[this.selectedExpense]/81
+  }
+  
+  else{
+    this.currency='INR'
+    this.my2user[this.selectedExpense]=this.my2user[this.selectedExpense]*81
+  }
+}
+incomeusdConverter(){
+  if(this.icurrency=='INR'){
+    this.icurrency='USD'
+    this.myuser[this.selectedIncome]=this.myuser[this.selectedIncome]/81
+  }
+  
+  else{
+    this.icurrency='INR'
+    this.myuser[this.selectedIncome]=this.myuser[this.selectedIncome]*81
+  }
+}
 expense(){
   this.userpresentFlag=false;
   this.incomeFlag=false;
@@ -452,6 +476,7 @@ incomesubmit(){
   if(this.curruser['Others']){
     this.curruser.others=this.curruser['Others']
   }
+  
   this.curruser.IncomeCount++;
   let cnt=0;
   for(let key in this.myuser) {

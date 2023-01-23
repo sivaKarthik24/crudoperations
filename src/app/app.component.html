@@ -158,8 +158,8 @@
                 </select>
                 </p>
                 
-                <p>Enter {{selectedIncome}} Amount    :<input type="number" name="h" [(ngModel)]="myuser[selectedIncome]" /></p>
-                
+                <p>Enter {{selectedIncome}} Amount in {{icurrency}}   :<input type="number" name="h" [(ngModel)]="myuser[selectedIncome]" />&nbsp;
+                <button type="button" name="usd" (click)="incomeusdConverter()">conversion</button></p>
                 <p>Description    :<input type="text" name="descr" [(ngModel)]="myuser.eightName" /></p>
                 <p>Date of Transaction: <input type="date" name="dot" [(ngModel)]="myuser.income_dot" /></p>
               </form>
@@ -195,7 +195,8 @@
               </p>
               
             
-              <p>Enter {{selectedExpense}} Amount    :<input type="number" name="h" [(ngModel)]="my2user[selectedExpense]" /></p>
+              <p>Enter {{selectedExpense}} Amount  in {{currency}} :<input type="number" name="h" [(ngModel)]="my2user[selectedExpense]" />&nbsp;
+              <button type="button" name="usd" (click)="usdConverter()">conversion</button></p>
               <p>Description    :<input type="text" name="descr" [(ngModel)]="my2user.seventhName" /></p>
               <p>Date of Transaction: <input type="date" name="dot" [(ngModel)]="my2user.expence_dot" /></p>
           </form>
