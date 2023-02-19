@@ -1,0 +1,97 @@
+
+<table *ngIf="dailyFlag" class="table table-bordered table-striped table-hover">
+    <thead>
+      <tr>
+        <th class="text-center">Date</th>
+        <th class="text-center">Category</th>
+        <th class="text-center">Description</th>
+        <th class="text-center">Amount</th>
+        <th class="text-center">Status</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of daily;let ind=index">
+        <td>{{ user.date }}</td>
+        <td>{{ user.category }}</td>
+        <td>{{ user.desc }}</td>
+        <td>{{ user.amount }}</td>
+        <td class="sign{{user.num}}"><b>{{ user.sign }}</b></td>
+        
+      </tr>
+
+    </tbody>
+
+    
+  </table>
+  <table *ngIf="weeklyFlag" class="table table-bordered table-striped table-hover">
+    <thead>
+      <tr>
+        <th class="text-center">Date</th>
+        <th class="text-center">Description</th>
+        <th class="text-center">Amount</th>
+        <th class="text-center">Status</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of weekly;let ind=index">
+        <td>{{ user.date }}</td>
+        <td>{{ user.desc }}</td>
+        <td>{{ user.amount }}</td>
+        <td class="sign{{user.num}}"><b>{{ user.sign }}</b></td>
+        
+      </tr>
+
+    </tbody>
+
+    
+  </table>
+  <table *ngIf="monthlyFlag" class="table table-bordered table-striped table-hover">
+    <thead>
+      <tr>
+        <th class="text-center">Date</th>
+        <th class="text-center">Description</th>
+        <th class="text-center">Amount</th>
+        <th class="text-center">Status</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of monthly;let ind=index">
+        <td>{{ user.date }}</td>
+        <td>{{ user.desc }}</td>
+        <td>{{ user.amount }}</td>
+        <td class="sign{{user.num}}"><b>{{ user.sign }}</b></td>
+        
+      </tr>
+
+    </tbody>
+
+    
+  </table>
+  
+Last Transactions:
+  <button type="button" class="btn btn-link " style="width:120px;" (click)="dailyT()">Daily </button>
+  
+  <button type="button" class="btn btn-link" style="width:120px;" (click)="weeklyT()">Weekly </button>
+  
+  <button type="button" class="btn btn-link" style="width:120px;" (click)="monthlyT()">Monthly</button>
+ 
+  <div>
+    &nbsp;
+  </div>
+  
+  <div class="col-6">
+    
+          <div id="chart-column"></div>
+  </div>
+  <div *ngIf="monthlyFlag">
+    <button type="button" class="btn btn-link" style="width:120px;" (click)="incomevsexpense()">Income vs Expense</button>
+    <div  class="col-6">
+      <div id="chart-month"></div>
+    </div>
+    <div  class="col-6">
+      <div id="chart-line"></div>
+    </div>
+  </div>

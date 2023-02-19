@@ -1,8 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Alert } from 'selenium-webdriver';
 import { User } from './models/user';
 import { UserService } from './services/user.service';
+import * as Highcharts from 'highcharts';
+import HighchartsMore from 'highcharts/highcharts-more';
+import HighchartsSolidGauge from 'highcharts/modules/solid-gauge';
+// import { Router } from '@angular/router';
+
+HighchartsMore(Highcharts);
+HighchartsSolidGauge(Highcharts);
+
 
 @Component({
   selector: 'app-root',
@@ -49,9 +57,12 @@ export class AppComponent implements OnInit {
   icurrency: string;
   icustomFlag: boolean;
   ecustomFlag: boolean;
+  historyFlag=false;
+  message:string;
   constructor(private userService: UserService) { }
 
   ngOnInit() {
+    
     this.users = this.getUsers();
     this.currency='INR'
     this.icurrency='INR'
@@ -96,6 +107,7 @@ export class AppComponent implements OnInit {
     this.userForm = true;
     this.isNewUser = true;
     this.loginForm=false;
+    // this.createChartColumn();
 
   }
   showloginForm(){
@@ -201,6 +213,7 @@ export class AppComponent implements OnInit {
     this.incomeFlag=false;
     this.expenseFlag=false;
     this.summaryFlag=false
+    this.historyFlag=false
   }
   loginPage(mail){
     this.currentUser=mail;
@@ -212,6 +225,7 @@ export class AppComponent implements OnInit {
     this.userService.updateUser(this.editedUser);
     this.editUserForm = false;
     this.editedUser = {};
+    
     
   }
   additionalsave() {
@@ -330,8 +344,7 @@ export class AppComponent implements OnInit {
       this.loginflag=false;
       this.userForm=false;
       this.loginForm=false;
-      
-      console.log(this.curruser)
+      this.message=this.curruser.firstName
       if(this.curruser.sixthName===undefined ||  this.curruser.sixthName===null){
       if(this.curruser.fourthName!=undefined &&this.curruser.fifthName!=undefined){
         this.probar=66.66
@@ -378,6 +391,7 @@ readURL(input)
   
 }
 sample(){
+  console.log('sks')
   document.querySelector('#bannerImg').addEventListener("change",function(){
     const reader=new FileReader();
     //reader.readAsDataURL(this.files[0]);
@@ -407,13 +421,29 @@ sample(){
   //   }
   // }
 }
+sample1(){
+
+  document.querySelector('#bannerImg1').addEventListener("change",function(){
+    const reader=new FileReader();
+    reader.readAsDataURL(this.files[0]);
+    reader.addEventListener("load",()=>{
+      
+      localStorage.setItem("recent-img",reader.result as string)
+    })
+    
+  })
+ 
+  const recentImageDataUrl=localStorage.getItem("recent-img")
+  this.editedUser.sixthName=recentImageDataUrl
+  document.querySelector('#imgPreview1').setAttribute("src",recentImageDataUrl)
+  }
 income(){
   this.icustomFlag=false;
 this.incomeFlag=true;
   this.userpresentFlag=false;
   this.expenseFlag=false;
   this.summaryFlag=false;
-
+  this.historyFlag=false
   this.myuser={}
   
 }
@@ -445,6 +475,7 @@ expense(){
   this.incomeFlag=false;
   this.expenseFlag=true;
   this.summaryFlag=false;
+  this.historyFlag=false
   this.my2user={}
 
 }
@@ -454,12 +485,14 @@ summary(){
   this.incomeFlag=false;
   this.expenseFlag=false;
   this.summaryFlag=true;
+  this.historyFlag=false
 }
 profile(){
   this.userpresentFlag=true;
   this.incomeFlag=false;
   this.expenseFlag=false;
   this.summaryFlag=false;
+  this.historyFlag=false
 }
 onChangeIncome(deviceValue) {
   
@@ -558,4 +591,22 @@ expensesubmit(){
   this.curruser.totalExpense+=cnt;
   this.summary()
   }
+  
+  
+  history(){
+    this.userpresentFlag=false;
+  this.incomeFlag=false;
+  this.expenseFlag=false;
+  this.summaryFlag=false;
+  this.historyFlag=true;
+  }
 }
+// core.js:6456 ERROR DOMException: Failed to execute 'setItem' on 'Storage': Setting the value of 'recent-img' exceeded the quota.
+//     at FileReader.<anonymous> (http://localhost:4200/main.js:1178:30)
+//     at ZoneDelegate.invokeTask (http://localhost:4200/polyfills.js:10228:31)
+//     at Object.onInvokeTask (http://localhost:4200/vendor.js:34827:33)
+//     at ZoneDelegate.invokeTask (http://localhost:4200/polyfills.js:10227:60)
+//     at Zone.runTask (http://localhost:4200/polyfills.js:10000:47)
+//     at ZoneTask.invokeTask [as invoke] (http://localhost:4200/polyfills.js:10309:34)
+//     at invokeTask (http://localhost:4200/polyfills.js:11422:14)
+//     at FileReader.globalZoneAwareCallback (http://localhost:4200/polyfills.
